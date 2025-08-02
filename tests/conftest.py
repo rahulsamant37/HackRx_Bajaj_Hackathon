@@ -8,6 +8,7 @@ from typing import AsyncGenerator, Generator, Dict, Any
 from unittest.mock import Mock, AsyncMock, patch
 
 import pytest
+import pytest_asyncio
 from fastapi.testclient import TestClient
 import numpy as np
 
@@ -78,9 +79,11 @@ def mock_gemini_embeddings():
     mock_embeddings = AsyncMock()
     
     # Mock embeddings response - Gemini embeddings are 768-dimensional
-    mock_embeddings.aembed_documents.return_value = [
-        [0.1] * 768  # Mock 768-dimensional embedding for Gemini
-    ]
+    # Return one embedding per input text
+    def mock_embed_documents(texts):
+        return [[0.1] * 768 for _ in texts]  # One embedding per text
+    
+    mock_embeddings.aembed_documents.side_effect = mock_embed_documents
     
     return mock_embeddings
 
@@ -103,13 +106,13 @@ def mock_gemini_chat():
     return mock_chat
 
 
-@pytest.fixture
+@pytest_asyncio.fixture(scope="function")
 async def document_processor():
     """Create document processor instance."""
     return DocumentProcessor()
 
 
-@pytest.fixture
+@pytest_asyncio.fixture(scope="function")
 async def mock_rag_service(mock_gemini_embeddings, mock_gemini_chat):
     """Create RAG service with mocked Google Gemini components."""
     with patch('app.services.rag_service.GoogleGenerativeAIEmbeddings') as mock_embeddings_class, \
@@ -225,7 +228,7 @@ def mock_faiss_index():
     return mock_index
 
 
-@pytest.fixture
+@pytest_asyncio.fixture(scope="function")
 async def populated_rag_service(mock_rag_service, sample_processed_document):
     """RAG service with some test data."""
     with patch('faiss.IndexFlatL2') as mock_faiss:
@@ -334,7 +337,7 @@ def performance_timer():
 
 
 # Async testing utilities
-@pytest.fixture
+@pytest_asyncio.fixture(scope="function")
 async def async_mock():
     """Create async mock utility."""
     def create_async_mock(return_value=None, side_effect=None):

@@ -36,7 +36,7 @@ class TestSettings:
             assert settings.debug is False
             assert settings.host == "0.0.0.0"
             assert settings.port == 8000
-            assert settings.openai_embedding_model == "text-embedding-ada-002"
+            assert settings.gemini_embedding_model == "models/embedding-001"
             assert settings.gemini_chat_model == "gemini-2.5-flash"
             assert settings.chunk_size == 1000
             assert settings.chunk_overlap == 200
