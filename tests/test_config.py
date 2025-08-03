@@ -167,13 +167,13 @@ class TestSettings:
             Settings()
         
         # Test temperature validation
-        os.environ["OPENAI_TEMPERATURE"] = "3.0"
+        os.environ["GEMINI_TEMPERATURE"] = "3.0"
         with pytest.raises(ValidationError):
             Settings()
         
-        os.environ["OPENAI_TEMPERATURE"] = "0.7"
+        os.environ["GEMINI_TEMPERATURE"] = "0.7"
         settings = Settings()
-        assert settings.openai_temperature == 0.7
+        assert settings.GEMINI_temperature == 0.7
     
     def test_directory_creation(self):
         """Test that required directories are created."""

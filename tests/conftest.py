@@ -369,8 +369,8 @@ def cleanup_test_data():
 def error_scenarios():
     """Common error scenarios for testing."""
     return {
-        "openai_rate_limit": Exception("Rate limit exceeded"),
-        "openai_invalid_key": Exception("Invalid API key"),
+        "GEMINI_rate_limit": Exception("Rate limit exceeded"),
+        "GEMINI_invalid_key": Exception("Invalid API key"),
         "file_not_found": FileNotFoundError("File not found"),
         "permission_denied": PermissionError("Permission denied"),
         "vector_store_error": Exception("Vector store operation failed"),

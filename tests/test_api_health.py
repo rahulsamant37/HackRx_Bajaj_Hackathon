@@ -37,7 +37,7 @@ class TestHealthEndpoints:
         """Test detailed health check with all systems healthy."""
         # Mock settings
         mock_settings = Mock()
-        mock_settings.openai_api_key = "valid_api_key"
+        mock_settings.GEMINI_api_key = "valid_api_key"
         mock_settings.vector_store_path = "/tmp/test_vector_store"
         mock_settings.log_file = "/tmp/test.log"
         mock_get_settings.return_value = mock_settings
@@ -63,7 +63,7 @@ class TestHealthEndpoints:
             
             # Check individual health checks
             checks = data["checks"]
-            assert "openai_config" in checks
+            assert "GEMINI_config" in checks
             assert "vector_store" in checks
             assert "filesystem" in checks
             assert "system_resources" in checks
@@ -77,7 +77,7 @@ class TestHealthEndpoints:
         """Test detailed health check with some systems unhealthy."""
         # Mock settings
         mock_settings = Mock()
-        mock_settings.openai_api_key = "your_openai_api_key_here"  # Not configured
+        mock_settings.GEMINI_api_key = "your_GEMINI_api_key_here"  # Not configured
         mock_settings.vector_store_path = "/nonexistent/path"
         mock_settings.log_file = "/tmp/test.log"
         mock_get_settings.return_value = mock_settings
@@ -95,7 +95,7 @@ class TestHealthEndpoints:
             
             # Should have failing checks
             checks = data["checks"]
-            assert checks["openai_config"]["status"] == "warning"
+            assert checks["GEMINI_config"]["status"] == "warning"
             assert checks["vector_store"]["status"] == "unhealthy"
     
     @patch('app.api.endpoints.health.get_settings')
@@ -103,7 +103,7 @@ class TestHealthEndpoints:
         """Test detailed health check with warnings."""
         # Mock settings
         mock_settings = Mock()
-        mock_settings.openai_api_key = "your_openai_api_key_here"  # Warning condition
+        mock_settings.GEMINI_api_key = "your_GEMINI_api_key_here"  # Warning condition
         mock_settings.vector_store_path = "/tmp/test_vector_store"
         mock_settings.log_file = "/tmp/test.log"
         mock_get_settings.return_value = mock_settings
@@ -134,7 +134,7 @@ class TestHealthEndpoints:
         """Test readiness check when service is ready.""" 
         with patch('app.api.endpoints.health.get_settings') as mock_get_settings:
             mock_settings = Mock()
-            mock_settings.openai_api_key = "valid_api_key"
+            mock_settings.GEMINI_api_key = "valid_api_key"
             mock_settings.vector_store_path = "/tmp/test_vector_store"
             mock_get_settings.return_value = mock_settings
             
@@ -151,7 +151,7 @@ class TestHealthEndpoints:
         """Test readiness check when service is not ready."""
         with patch('app.api.endpoints.health.get_settings') as mock_get_settings:
             mock_settings = Mock()
-            mock_settings.openai_api_key = "your_openai_api_key_here"  # Not configured
+            mock_settings.GEMINI_api_key = "your_GEMINI_api_key_here"  # Not configured
             mock_settings.vector_store_path = "/tmp/test_vector_store"
             mock_get_settings.return_value = mock_settings
             
@@ -239,7 +239,7 @@ class TestHealthEndpointErrors:
         
         with patch('app.api.endpoints.health.get_settings') as mock_get_settings:
             mock_settings = Mock()
-            mock_settings.openai_api_key = "valid_key"
+            mock_settings.GEMINI_api_key = "valid_key"
             mock_settings.vector_store_path = "/tmp/test"
             mock_settings.log_file = "/tmp/test.log"
             mock_get_settings.return_value = mock_settings

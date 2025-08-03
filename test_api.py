@@ -30,7 +30,7 @@ async def test_health_endpoints():
     if response.status_code == 200:
         print("✅ All health checks passed")
     else:
-        print("⚠️ Some health checks failed - this is expected without OpenAI API key")
+        print("⚠️ Some health checks failed - this is expected without GEMINI API key")
     
     # Test service info
     response = client.get("/health/info")
