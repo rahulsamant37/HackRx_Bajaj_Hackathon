@@ -10,6 +10,9 @@ from app.middleware import RequestLoggingMiddleware, ErrorHandlingMiddleware
 from app.api.endpoints import health
 from app.utils.logger import setup_logging
 
+import os
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -52,9 +55,10 @@ def create_app() -> FastAPI:
     app.include_router(health.router, prefix="/health", tags=["health"])
     
     # Import and include other routers
-    from app.api.endpoints import documents, qa
+    from app.api.endpoints import documents, qa, hackrx
     app.include_router(documents.router, prefix="/documents", tags=["documents"])
     app.include_router(qa.router, prefix="/qa", tags=["questions-answers"])
+    app.include_router(hackrx.router, prefix="/api/v1/hackrx", tags=["hackrx"])
     
     return app
 
