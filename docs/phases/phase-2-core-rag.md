@@ -2,7 +2,7 @@
 
 ## Overview
 
-Phase 2 implements the core Retrieval-Augmented Generation functionality, including document processing, vector embeddings, similarity search, and answer generation using OpenAI and FAISS.
+Phase 2 implements the core Retrieval-Augmented Generation functionality, including document processing, vector embeddings, similarity search, and answer generation using GEMINI and FAISS.
 
 ## Completed Components
 
@@ -37,7 +37,7 @@ Phase 2 implements the core Retrieval-Augmented Generation functionality, includ
 - `app/services/rag_service.py` - Main RAG implementation
 
 **Key Features:**
-- **OpenAI Integration**: text-embedding-ada-002 for embeddings, GPT-3.5-turbo for answers
+- **GEMINI Integration**: text-embedding-ada-002 for embeddings, GPT-3.5-turbo for answers
 - **FAISS Vector Store**: Efficient similarity search with persistent storage
 - **Intelligent Search**: Configurable similarity thresholds and result ranking
 - **Context Assembly**: Smart context selection for answer generation
@@ -84,7 +84,7 @@ Phase 2 implements the core Retrieval-Augmented Generation functionality, includ
 
 **FAISS Implementation:**
 - **Index Type**: IndexFlatL2 for exact similarity search
-- **Dimension**: 1536 (OpenAI text-embedding-ada-002)
+- **Dimension**: 1536 (GEMINI text-embedding-ada-002)
 - **Persistence**: Automatic save/load from configured storage path
 - **Metadata Storage**: Parallel arrays for document and chunk metadata
 - **Scalability**: Designed for thousands of documents
@@ -92,7 +92,7 @@ Phase 2 implements the core Retrieval-Augmented Generation functionality, includ
 **Vector Operations:**
 ```python
 # Embedding generation
-embeddings = await openai_client.embeddings.create(
+embeddings = await GEMINI_client.embeddings.create(
     model="text-embedding-ada-002",
     input=text_chunks
 )
@@ -147,7 +147,7 @@ extractors = {
 ### Memory Management
 - **Streaming Processing**: Large files processed in chunks
 - **Resource Cleanup**: Proper cleanup of temporary files and memory
-- **Connection Pooling**: Efficient OpenAI API client management
+- **Connection Pooling**: Efficient GEMINI API client management
 
 ### Caching Strategy
 - **Embedding Cache**: Avoid re-computing embeddings for identical text
@@ -158,9 +158,9 @@ extractors = {
 
 ### Exception Hierarchy
 - `DocumentProcessingError`: File processing failures
-- `EmbeddingError`: OpenAI embedding API failures
+- `EmbeddingError`: GEMINI embedding API failures
 - `VectorStoreError`: FAISS operations failures
-- `OpenAIAPIError`: General OpenAI API issues
+- `GEMINIAPIError`: General GEMINI API issues
 
 ### Comprehensive Logging
 - **Processing Metrics**: Document processing times and statistics
@@ -169,7 +169,7 @@ extractors = {
 - **Usage Tracking**: API usage and cost tracking
 
 ### Retry Logic
-- **Exponential Backoff**: For OpenAI API rate limiting
+- **Exponential Backoff**: For GEMINI API rate limiting
 - **Circuit Breaker**: Prevents cascade failures
 - **Graceful Degradation**: Fallback strategies for partial failures
 
@@ -187,10 +187,10 @@ chunk_size: int = 1000
 chunk_overlap: int = 200
 max_file_size: int = 10485760  # 10MB
 
-# OpenAI Configuration
-openai_embedding_model: str = "text-embedding-ada-002"
-openai_chat_model: str = "gpt-3.5-turbo"
-openai_max_tokens: int = 1000
+# GEMINI Configuration
+GEMINI_embedding_model: str = "text-embedding-ada-002"
+GEMINI_chat_model: str = "gpt-3.5-turbo"
+GEMINI_max_tokens: int = 1000
 ```
 
 ## Quality Assurance
@@ -210,7 +210,7 @@ openai_max_tokens: int = 1000
 ## Dependencies
 
 **Core RAG Libraries:**
-- `openai>=1.68.2` - OpenAI API client
+- `GEMINI>=1.68.2` - GEMINI API client
 - `faiss-cpu==1.7.4` - Vector similarity search
 - `numpy==1.24.3` - Numerical operations
 

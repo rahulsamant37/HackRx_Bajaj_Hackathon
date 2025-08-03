@@ -69,7 +69,7 @@ Requirements:
 
 1. **config.py** - Configuration management:
    - Use pydantic-settings for environment variables
-   - OpenAI API configuration (key, organization, models)
+   - GEMINI API configuration (key, organization, models)
    - Application settings (debug, host, port, environment)
    - Vector database settings (storage path, index parameters)
    - Rate limiting configuration
@@ -91,7 +91,7 @@ Requirements:
    - DocumentProcessingError
    - EmbeddingError
    - VectorStoreError
-   - OpenAIAPIError
+   - GEMINIAPIError
    - ValidationError
    - Include proper error codes and messages
 
@@ -164,7 +164,7 @@ Requirements:
 **services/rag_service.py** - Core RAG implementation:
 
 Main Class: RAGService
-- Initialize OpenAI client and FAISS vector store
+- Initialize GEMINI client and FAISS vector store
 - Handle document embedding and storage
 - Implement similarity search with configurable parameters
 - Generate answers using GPT-3.5-turbo with context
@@ -185,7 +185,7 @@ Key Methods:
 3. answer_question(question: str, context_limit: int = 4000) -> AnswerResponse
    - Search for relevant context
    - Build prompt with context
-   - Call OpenAI API for answer generation
+   - Call GEMINI API for answer generation
    - Include source citations
 
 4. delete_document(doc_id: str) -> bool
@@ -197,7 +197,7 @@ Key Methods:
    - Document count, index size, etc.
 
 Technical Requirements:
-- Use OpenAI text-embedding-ada-002 for embeddings
+- Use GEMINI text-embedding-ada-002 for embeddings
 - FAISS IndexFlatL2 for vector storage
 - Implement proper error handling for API failures
 - Add retry logic with exponential backoff
@@ -376,7 +376,7 @@ Health Check Endpoints:
 2. GET /health/detailed
    - Comprehensive health check
    - Test all external dependencies
-   - OpenAI API connectivity
+   - GEMINI API connectivity
    - Vector store status
    - File system access
    - Memory and disk usage
@@ -473,7 +473,7 @@ tests/
 
 **conftest.py** - Pytest configuration:
 - FastAPI test client setup
-- Mock OpenAI client
+- Mock GEMINI client
 - Temporary file system setup
 - Database fixtures
 - Authentication fixtures
@@ -512,7 +512,7 @@ tests/
 
 Testing Features:
 - Pytest with async support
-- Mock external APIs (OpenAI)
+- Mock external APIs (GEMINI)
 - Temporary file handling
 - Database state management
 - Performance benchmarking
@@ -758,7 +758,7 @@ Pipeline Features:
 - Automatic rollback on failures
 
 **Secrets Management**:
-- OpenAI API keys
+- GEMINI API keys
 - Docker Hub credentials
 - Cloud provider credentials
 - Database connection strings

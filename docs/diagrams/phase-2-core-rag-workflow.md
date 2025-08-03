@@ -41,7 +41,7 @@ graph TB
 
     %% Embedding & Storage
     subgraph "Vector Processing"
-        E --> E1[OpenAI API Call]
+        E --> E1[GEMINI API Call]
         E1 --> E2[text-embedding-ada-002]
         E2 --> E3[Vector Validation]
         
@@ -53,7 +53,7 @@ graph TB
     %% Query Processing
     subgraph "Query Processing"
         H --> H1[Query Preprocessing]
-        H1 --> H2[OpenAI Embedding]
+        H1 --> H2[GEMINI Embedding]
         
         I --> I1[FAISS Search]
         I1 --> I2[Similarity Scoring]
@@ -68,7 +68,7 @@ graph TB
     subgraph "Answer Generation"
         K --> K1[Prompt Construction]
         K1 --> K2[Context Injection]
-        K2 --> K3[OpenAI Chat Completion]
+        K2 --> K3[GEMINI Chat Completion]
         K3 --> K4[Response Processing]
         
         L --> L1[Source Citation]
@@ -112,7 +112,7 @@ sequenceDiagram
     participant FileValidator as File Validator
     participant TextExtractor as Text Extractor
     participant Chunker as Text Chunker
-    participant OpenAI as OpenAI API
+    participant GEMINI as GEMINI API
     participant FAISS as Vector Store
 
     User->>DocService: Upload Document
@@ -130,8 +130,8 @@ sequenceDiagram
         Chunker-->>DocService: Text Chunks
         
         loop For Each Chunk
-            DocService->>OpenAI: Generate Embedding
-            OpenAI-->>DocService: Vector Embedding
+            DocService->>GEMINI: Generate Embedding
+            GEMINI-->>DocService: Vector Embedding
         end
         
         DocService->>FAISS: Store Vectors
@@ -146,13 +146,13 @@ sequenceDiagram
 sequenceDiagram
     participant User as User
     participant RAGService as RAG Service
-    participant OpenAI as OpenAI API
+    participant GEMINI as GEMINI API
     participant FAISS as Vector Store
     participant ContextAssembler as Context Assembler
 
     User->>RAGService: Ask Question
-    RAGService->>OpenAI: Generate Query Embedding
-    OpenAI-->>RAGService: Query Vector
+    RAGService->>GEMINI: Generate Query Embedding
+    GEMINI-->>RAGService: Query Vector
     
     RAGService->>FAISS: Search Similar Vectors
     FAISS-->>RAGService: Similar Chunks
@@ -160,9 +160,9 @@ sequenceDiagram
     RAGService->>ContextAssembler: Assemble Context
     ContextAssembler-->>RAGService: Formatted Context
     
-    RAGService->>OpenAI: Generate Answer
-    Note over OpenAI: GPT-3.5-turbo with context
-    OpenAI-->>RAGService: Generated Answer
+    RAGService->>GEMINI: Generate Answer
+    Note over GEMINI: GPT-3.5-turbo with context
+    GEMINI-->>RAGService: Generated Answer
     
     RAGService-->>User: Answer + Sources
 ```
@@ -213,12 +213,12 @@ graph TB
     Y -.-> M
 ```
 
-## OpenAI Integration Flow
+## GEMINI Integration Flow
 
 ```mermaid
 graph LR
     subgraph "Embedding Pipeline"
-        A[Text Chunks] --> B[OpenAI Client]
+        A[Text Chunks] --> B[GEMINI Client]
         B --> C[text-embedding-ada-002]
         C --> D[1536-dim Vectors]
         D --> E[Validation]
@@ -227,7 +227,7 @@ graph LR
     
     subgraph "Chat Completion Pipeline"  
         G[Question + Context] --> H[Prompt Engineering]
-        H --> I[OpenAI Client]
+        H --> I[GEMINI Client]
         I --> J[gpt-3.5-turbo]
         J --> K[Generated Answer]
         K --> L[Response Processing]
@@ -362,7 +362,7 @@ graph LR
     F --> G[Document Service Init]
     
     subgraph "RAG Service Configuration"
-        F --> F1[OpenAI Client Setup]
+        F --> F1[GEMINI Client Setup]
         F1 --> F2[API Key Validation]
         F2 --> F3[Model Configuration]
         F3 --> F4[Vector Store Setup]
@@ -406,7 +406,7 @@ mindmap
       ConversationSession
       Embedding Manager
       Context Assembler
-    OpenAI Integration
+    GEMINI Integration
       Async Client
       Embedding API
       Chat Completion API

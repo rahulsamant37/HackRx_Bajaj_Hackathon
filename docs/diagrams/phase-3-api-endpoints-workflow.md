@@ -163,7 +163,7 @@ sequenceDiagram
     participant Client as Client
     participant API as Q&A API
     participant RAG as RAG Service
-    participant OpenAI as OpenAI API
+    participant GEMINI as GEMINI API
     participant Stream as SSE Handler
 
     Client->>API: POST /qa/ask/stream
@@ -173,16 +173,16 @@ sequenceDiagram
     Stream-->>Client: Connection established
     
     API->>RAG: Process question
-    RAG->>OpenAI: Stream chat completion
+    RAG->>GEMINI: Stream chat completion
     
     loop Streaming Response
-        OpenAI-->>RAG: Partial response chunk
+        GEMINI-->>RAG: Partial response chunk
         RAG-->>API: Processed chunk
         API->>Stream: Send SSE event
         Stream-->>Client: data: {"chunk": "text"}
     end
     
-    OpenAI-->>RAG: Stream complete
+    GEMINI-->>RAG: Stream complete
     RAG-->>API: Final response with sources
     API->>Stream: Send completion event
     Stream-->>Client: data: {"complete": true, "sources": [...]}
@@ -370,11 +370,11 @@ graph TB
     
     subgraph "Configuration Dependencies"
         E --> E1[get_settings]
-        E --> E2[get_openai_client]
+        E --> E2[get_GEMINI_client]
         E --> E3[get_vector_store]
         
         E1 --> E1A[Settings Instance]
-        E2 --> E2A[OpenAI Client Instance]
+        E2 --> E2A[GEMINI Client Instance]
         E3 --> E3A[Vector Store Instance]
     end
     

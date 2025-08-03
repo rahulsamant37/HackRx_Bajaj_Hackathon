@@ -25,7 +25,7 @@ pytest
 pytest -m unit                    # Unit tests only
 pytest -m integration             # Integration tests only
 pytest -m "not slow"              # Skip slow tests
-pytest -m requires_openai         # Tests requiring OpenAI API
+pytest -m requires_GEMINI         # Tests requiring GEMINI API
 
 # Run specific test files
 pytest tests/test_rag_service.py
@@ -64,7 +64,7 @@ black . && isort . && flake8 . && mypy .
 - Comprehensive validation for all settings
 
 **Services Layer**
-- `rag_service.py`: Core RAG implementation with OpenAI + FAISS
+- `rag_service.py`: Core RAG implementation with GEMINI + FAISS
 - `document_service.py`: Document processing (PDF, TXT, DOCX, MD)
 
 **API Endpoints (`app/api/endpoints/`)**
@@ -100,7 +100,7 @@ black . && isort . && flake8 . && mypy .
 - `.env.example`: Template with all available options
 
 **Key Settings**
-- OpenAI API configuration (models, tokens, temperature)
+- GEMINI API configuration (models, tokens, temperature)
 - Vector store settings (path, index type, similarity threshold)
 - Document processing (chunk size, overlap, file size limits)
 - Rate limiting and CORS configuration
@@ -116,7 +116,7 @@ black . && isort . && flake8 . && mypy .
 **Test Configuration**
 - Coverage reporting with 80% minimum threshold
 - Async test support enabled
-- Mock OpenAI responses for consistent testing
+- Mock GEMINI responses for consistent testing
 - Separate test vector store path
 
 ### Document Processing Pipeline
@@ -124,7 +124,7 @@ black . && isort . && flake8 . && mypy .
 1. **Upload & Validation**: File type and size validation
 2. **Text Extraction**: Format-specific parsing (PDF, DOCX, etc.)
 3. **Chunking**: Intelligent text splitting with overlap
-4. **Embedding**: OpenAI text-embedding-ada-002
+4. **Embedding**: GEMINI text-embedding-ada-002
 5. **Indexing**: FAISS vector store with metadata
 6. **Storage**: Persistent storage with document tracking
 
@@ -133,7 +133,7 @@ black . && isort . && flake8 . && mypy .
 1. **Query Embedding**: Convert question to vector
 2. **Similarity Search**: FAISS search with configurable threshold
 3. **Context Assembly**: Retrieve and rank relevant chunks
-4. **Answer Generation**: OpenAI chat completion with context
+4. **Answer Generation**: GEMINI chat completion with context
 5. **Response Streaming**: Optional SSE streaming support
 
 ## Development Guidelines
@@ -152,12 +152,12 @@ black . && isort . && flake8 . && mypy .
 
 ### Environment Setup
 1. Copy `.env.example` to `.env`
-2. Set `OPENAI_API_KEY` (required)
+2. Set `GEMINI_API_KEY` (required)
 3. Configure other settings as needed
 4. Vector store path will be created automatically
 
 ### Security Considerations
-- OpenAI API key must be set in environment variables
+- GEMINI API key must be set in environment variables
 - JWT configuration for future authentication features
 - Rate limiting configured per endpoint
 - CORS properly configured for development/production

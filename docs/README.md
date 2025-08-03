@@ -16,7 +16,7 @@ Complete documentation for each development phase:
 
 - **[Phase 2: Core RAG Implementation](phases/phase-2-core-rag.md)**
   - Document processing service (PDF, TXT, DOCX, MD)
-  - OpenAI integration for embeddings and chat
+  - GEMINI integration for embeddings and chat
   - FAISS vector store implementation
   - RAG query processing pipeline
 
@@ -64,7 +64,7 @@ The RAG Q&A Foundation follows a layered architecture:
 └─────────────────────────────────────────┘
 ┌─────────────────────────────────────────┐
 │          Infrastructure Layer           │
-│  (OpenAI, FAISS, Config, Logging)      │
+│  (GEMINI, FAISS, Config, Logging)      │
 └─────────────────────────────────────────┘
 ```
 
@@ -80,7 +80,7 @@ The RAG Q&A Foundation follows a layered architecture:
 
 ### Prerequisites
 - Python 3.11+
-- OpenAI API key
+- GEMINI API key
 - Virtual environment
 
 ### Installation
@@ -96,7 +96,7 @@ pip install -r requirements.txt
 
 # Configure environment
 cp .env.example .env
-# Edit .env with your OpenAI API key
+# Edit .env with your GEMINI API key
 ```
 
 ### Running the Application

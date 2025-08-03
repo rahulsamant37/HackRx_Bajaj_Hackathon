@@ -37,10 +37,10 @@ Phase 4 implements a comprehensive testing framework covering unit tests, integr
 - Error cases for invalid configurations
 
 ```python
-def test_openai_api_key_required():
-    """Test that OpenAI API key is required."""
+def test_GEMINI_api_key_required():
+    """Test that GEMINI API key is required."""
     with pytest.raises(ValidationError):
-        Settings(openai_api_key="")
+        Settings(GEMINI_api_key="")
 
 def test_vector_store_path_creation():
     """Test automatic vector store directory creation."""
@@ -116,7 +116,7 @@ def test_health_basic(client):
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
 
-def test_health_detailed_with_dependencies(client, mock_openai):
+def test_health_detailed_with_dependencies(client, mock_GEMINI):
     """Test detailed health check with dependency validation."""
     response = client.get("/health/detailed")
     assert response.status_code == 200
@@ -266,9 +266,9 @@ def test_concurrent_queries(client, uploaded_documents):
 **Mock Objects:**
 ```python
 @pytest.fixture
-def mock_openai_client():
-    """Mock OpenAI client for consistent testing."""
-    with patch('openai.AsyncOpenAI') as mock:
+def mock_GEMINI_client():
+    """Mock GEMINI client for consistent testing."""
+    with patch('GEMINI.AsyncGEMINI') as mock:
         mock.return_value.embeddings.create.return_value = mock_embedding_response()
         mock.return_value.chat.completions.create.return_value = mock_chat_response()
         yield mock
@@ -400,7 +400,7 @@ tests/fixtures/sample_documents/
 # Test-specific configuration
 ENVIRONMENT = "testing"
 LOG_LEVEL = "WARNING"
-OPENAI_API_KEY = "test_key_not_real"
+GEMINI_API_KEY = "test_key_not_real"
 VECTOR_STORE_PATH = "./test_data/vector_store"
 MAX_FILE_SIZE = 1048576  # 1MB for faster testing
 DEBUG = False

@@ -51,7 +51,7 @@ graph TB
         D3A --> D3B[Metadata Management]
         D3B --> D3C[Persistence Testing]
         
-        D4 --> D4A[OpenAI API Integration]
+        D4 --> D4A[GEMINI API Integration]
         D4A --> D4B[Rate Limiting]
         D4B --> D4C[Error Handling]
     end
@@ -214,7 +214,7 @@ graph TB
     end
     
     subgraph "Mock Fixtures"
-        D --> D1[OpenAI Mock]
+        D --> D1[GEMINI Mock]
         D --> D2[External Service Mocks]
         D --> D3[File System Mocks]
         
@@ -254,12 +254,12 @@ graph TB
 
 ```mermaid
 graph TB
-    A[Mock Strategy] --> B[OpenAI API Mocking]
+    A[Mock Strategy] --> B[GEMINI API Mocking]
     A --> C[File System Mocking]
     A --> D[Database Mocking]
     A --> E[Network Mocking]
     
-    subgraph "OpenAI API Mocking"
+    subgraph "GEMINI API Mocking"
         B --> B1[Embedding API Mock]
         B --> B2[Chat Completion Mock]
         B --> B3[Error Simulation]

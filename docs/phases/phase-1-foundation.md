@@ -33,7 +33,7 @@ Phase 1 establishes the foundational architecture for the RAG Q&A system, focusi
 
 **Configuration Categories:**
 - Application settings (name, version, debug mode)
-- OpenAI API configuration (models, tokens, temperature)
+- GEMINI API configuration (models, tokens, temperature)
 - Vector database settings (path, index type, similarity threshold)
 - Document processing (chunk size, overlap, file size limits)
 - Rate limiting and CORS configuration
@@ -62,7 +62,7 @@ Phase 1 establishes the foundational architecture for the RAG Q&A system, focusi
 - `DocumentProcessingError` - Document handling errors
 - `EmbeddingError` - Vector embedding failures
 - `VectorStoreError` - FAISS vector store issues
-- `OpenAIAPIError` - OpenAI API failures
+- `GEMINIAPIError` - GEMINI API failures
 - `ValidationError` - Input validation errors
 
 **Features:**

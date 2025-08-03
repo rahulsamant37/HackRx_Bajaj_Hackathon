@@ -95,7 +95,7 @@ GET /health/info                # Service information and version
 ```
 
 **Health Check Features:**
-- **Dependency Validation**: OpenAI API connectivity, vector store status
+- **Dependency Validation**: GEMINI API connectivity, vector store status
 - **Resource Monitoring**: Memory usage, disk space, system metrics
 - **Performance Metrics**: Request latencies, error rates, throughput
 - **Kubernetes Integration**: Production-ready probe endpoints
@@ -116,7 +116,7 @@ GET /health/info                # Service information and version
 **Q&A Query Pipeline:**
 1. **Request Validation**: Input sanitization and parameter validation
 2. **Context Retrieval**: Vector similarity search
-3. **Answer Generation**: OpenAI API call with context
+3. **Answer Generation**: GEMINI API call with context
 4. **Response Assembly**: Format with sources and metadata
 5. **Streaming**: Optional SSE streaming for real-time responses
 
