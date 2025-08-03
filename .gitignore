@@ -201,3 +201,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+problem_Statement.md
+test_request.json
+vector_store/
