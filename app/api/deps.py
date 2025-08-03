@@ -11,6 +11,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from app.config import get_settings
 from app.services.document_service import DocumentProcessor
 from app.services.rag_service import RAGService
+from app.services.url_document_service import URLDocumentService
 from app.utils.logger import get_logger
 from app.utils.exceptions import ValidationError
 
@@ -39,6 +40,16 @@ def get_rag_service() -> RAGService:
     return RAGService()
 
 
+@lru_cache()
+def get_url_document_service() -> URLDocumentService:
+    """Get URL document service instance.
+    
+    Returns:
+        URLDocumentService instance
+    """
+    return URLDocumentService()
+
+
 def get_current_user(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ) -> Optional[str]:
@@ -59,6 +70,39 @@ def get_current_user(
     if credentials:
         return "default_user"
     return None
+
+
+def verify_api_key(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
+) -> str:
+    """Verify API key for HackRx endpoint.
+    
+    Args:
+        credentials: Authorization credentials with Bearer token
+        
+    Returns:
+        Authenticated user identifier
+        
+    Raises:
+        HTTPException: If API key is invalid or missing
+    """
+    settings = get_settings()
+    
+    if not credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authorization header required",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    if credentials.credentials != settings.api_key:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid API key",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    return "hackrx_user"
 
 
 def validate_file_upload(file: UploadFile) -> UploadFile:
