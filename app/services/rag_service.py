@@ -1,12 +1,12 @@
 """Core RAG service with Google Gemini embeddings and FAISS vector store."""
 
 import os
-import json
+# import json
 import uuid
-import asyncio
+# import asyncio
 import pickle
-from typing import List, Dict, Any, Optional, Tuple
-from datetime import datetime
+from typing import List, Dict, Any, Optional
+# from datetime import datetime
 import time
 
 import numpy as np
@@ -15,9 +15,9 @@ from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmb
 from langchain.schema import HumanMessage, SystemMessage
 
 from app.config import get_settings
-from app.services.document_service import DocumentChunk, ProcessedDocument
+from app.services.document_service import ProcessedDocument
 from app.utils.exceptions import (
-    RAGServiceError, 
+    # RAGServiceError, 
     EmbeddingError, 
     VectorStoreError, 
     GeminiAPIError,
@@ -132,12 +132,16 @@ class RAGService(LoggerMixin):
         self.index = None
         self.chunk_metadata = {}  # Maps chunk index to metadata
         self.document_chunks = {}  # Maps document_id to list of chunk indices
+        self._initialized = False
         
         # Ensure vector store directory exists
         os.makedirs(self.settings.vector_store_path, exist_ok=True)
-        
-        # Load existing index if available
-        asyncio.create_task(self._load_index())
+    
+    async def _ensure_initialized(self) -> None:
+        """Ensure the RAG service is initialized."""
+        if not self._initialized:
+            await self._load_index()
+            self._initialized = True
     
     async def _load_index(self) -> None:
         """Load existing FAISS index and metadata."""
@@ -264,6 +268,8 @@ class RAGService(LoggerMixin):
         Raises:
             VectorStoreError: If document addition fails
         """
+        await self._ensure_initialized()
+        
         try:
             if not processed_doc.chunks:
                 raise VectorStoreError(
@@ -366,6 +372,8 @@ class RAGService(LoggerMixin):
             VectorStoreError: If search fails
             ValidationError: If parameters are invalid
         """
+        await self._ensure_initialized()
+        
         try:
             if not query.strip():
                 raise ValidationError("Query cannot be empty", field="query", value=query)
@@ -465,6 +473,8 @@ class RAGService(LoggerMixin):
             GeminiAPIError: If Google Gemini API fails
             ValidationError: If parameters are invalid
         """
+        await self._ensure_initialized()
+        
         start_time = time.time()
         answer_id = str(uuid.uuid4())
         
