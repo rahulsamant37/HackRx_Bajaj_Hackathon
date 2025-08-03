@@ -11,7 +11,7 @@ import chardet
 from PyPDF2 import PdfReader
 from docx import Document as DocxDocument
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader, TextLoader, Docx2txtLoader
+from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2txtLoader
 from langchain.schema import Document
 
 from app.config import get_settings
