@@ -1,0 +1,95 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+dist/
+build/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+.tox/
+htmlcov/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# Development files
+tests/
+test_*.py
+*_test.py
+pytest.ini
+pyproject.toml.bak
+
+# Logs
+logs/
+*.log
+
+# Data files that should be loaded at runtime (keep data/ as it's needed)
+# Uncomment if data should be loaded from external sources:
+# data/
+
+# Development tools
+.ruff_cache/
+.mypy_cache/
+.black
+
+# Package management
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter
+.ipynb_checkpoints
+
+# Environment files
+.envrc
+
+# Development executables
+python-installer.exe
+
+# Other project files
+problem_Statement.md
+test_request.json
+CLAUDE.md
+project.md
+QUICKSTART.md

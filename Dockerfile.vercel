@@ -1,0 +1,53 @@
+# Optimized Dockerfile for Vercel deployment (< 250MB)
+# Using distroless base for minimal size
+FROM python:3.12-slim as builder
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency files
+COPY pyproject.toml uv.lock ./
+
+# Install dependencies with uv (only production dependencies)
+RUN uv sync --frozen --no-dev --no-cache
+
+# Production stage - use distroless for minimal size
+FROM gcr.io/distroless/python3-debian12:latest
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PATH="/app/.venv/bin:$PATH"
+
+# Copy virtual environment from builder
+COPY --from=builder /app/.venv /app/.venv
+
+# Copy application code
+COPY app/ /app/app/
+
+# Copy only essential data (consider loading from external storage in production)
+COPY data/vector_store/ /app/data/vector_store/
+
+# Set working directory
+WORKDIR /app
+
+# Expose port (Vercel will assign the port)
+EXPOSE 8000
+
+# Use the Python interpreter from the virtual environment
+ENTRYPOINT ["/app/.venv/bin/python"]
+CMD ["-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
