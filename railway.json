@@ -1,0 +1,11 @@
+{
+  "deploy": {
+    "dockerfile": "Dockerfile.vercel"
+  },
+  "build": {
+    "buildCommand": "echo 'Using Docker build'"
+  },
+  "run": {
+    "startCommand": "python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+  }
+}

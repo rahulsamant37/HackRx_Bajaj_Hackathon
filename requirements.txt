@@ -50,5 +50,8 @@ python-jose[cryptography]==3.3.0
 python-multipart==0.0.6
 bcrypt==4.1.2
 
+# Serverless adapter for Vercel
+mangum==0.17.0
+
 # Development utilities
 watchfiles==0.21.0

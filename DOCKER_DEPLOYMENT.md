@@ -1,6 +1,27 @@
 # RAG QA Foundation - Docker Deployment Guide
 
-This repository contains optimized Dockerfiles for deploying the RAG QA Foundation application, with special focus on Vercel deployment with size constraints.
+This repository contains optimized Dockerfiles for deploying the RAG QA Foundation application. **Note: Vercel has discontinued Docker support**, so we recommend alternative platforms.
+
+## 🚨 Important: Vercel Docker Deprecation
+
+Vercel no longer supports Docker deployments. The `@vercel/docker` builder has been removed. For containerized deployments, use one of these alternatives:
+
+## Recommended Deployment Platforms
+
+### 1. 🚂 Railway (Recommended)
+- **Pros**: Native Docker support, no arbitrary size limits, simple deployment
+- **Cons**: Limited free tier
+- **Best for**: Most Docker applications
+
+### 2. ☁️ Google Cloud Run
+- **Pros**: Enterprise-grade, auto-scaling, pay-per-use
+- **Cons**: Requires GCP account
+- **Best for**: Production applications
+
+### 3. 🎨 Render
+- **Pros**: Simple setup, good free tier
+- **Cons**: Limited customization
+- **Best for**: Simple deployments
 
 ## Dockerfile Options
 
