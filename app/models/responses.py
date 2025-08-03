@@ -189,3 +189,12 @@ class InfoResponse(BaseModel):
     configuration: Dict[str, Any] = Field(description="Non-sensitive configuration")
     api: Dict[str, Optional[str]] = Field(description="API endpoints")
     system: Dict[str, str] = Field(description="System information")
+
+
+class HackRxResponse(BaseModel):
+    """Response model for HackRx endpoint."""
+    
+    answers: List[str] = Field(
+        description="List of answers corresponding to the questions",
+        min_length=1,
+    )

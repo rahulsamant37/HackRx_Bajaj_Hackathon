@@ -153,6 +153,44 @@ class QuestionRequest(BaseModel):
     )
 
 
+class HackRxRequest(BaseModel):
+    """Request model for HackRx endpoint."""
+    
+    documents: str = Field(
+        ...,
+        description="URL of the document to process",
+        min_length=1,
+    )
+    questions: List[str] = Field(
+        ...,
+        description="List of questions to answer",
+        min_length=1,
+    )
+    
+    @field_validator("documents")
+    @classmethod
+    def validate_document_url(cls, v: str) -> str:
+        """Validate document URL format."""
+        if not v.startswith(("http://", "https://")):
+            raise ValueError("Document URL must start with http:// or https://")
+        return v
+    
+    @field_validator("questions")
+    @classmethod
+    def validate_questions(cls, v: List[str]) -> List[str]:
+        """Validate questions list."""
+        if not v:
+            raise ValueError("At least one question is required")
+        if len(v) > 20:
+            raise ValueError("Maximum 20 questions allowed")
+        for question in v:
+            if not question.strip():
+                raise ValueError("Questions cannot be empty")
+            if len(question) > 1000:
+                raise ValueError("Each question must be less than 1000 characters")
+        return v
+
+
 class ChatRequest(BaseModel):
     """Request model for conversational chat."""
     
